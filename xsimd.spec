@@ -6,13 +6,13 @@
 Summary:	C++ wrappers for SIMD intrinsics
 Summary(pl.UTF-8):	Opakowanie C++ dla operacji SIMD
 Name:		xsimd
-Version:	9.0.1
+Version:	10.0.0
 Release:	1
 License:	BSD
 Group:		Libraries
 #Source0Download: https://github.com/xtensor-stack/xsimd/tags
 Source0:	https://github.com/xtensor-stack/xsimd/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	59f38fe3364acd7ed137771258812d6c
+# Source0-md5:	e0dfed5da51b0d34d02b42f5b2ddf830
 URL:		https://xsimd.readthedocs.io/
 BuildRequires:	cmake >= 3.1
 BuildRequires:	rpmbuild(macros) >= 1.605
