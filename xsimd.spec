@@ -1,21 +1,24 @@
-# TODO: XTL xcomplex support? (BR: xtl-devel >= 0.7.0)
 #
 # Conditional build:
 %bcond_without	apidocs		# API documentation
+%bcond_with	xtl		# XTL xcomplex support
 #
 Summary:	C++ wrappers for SIMD intrinsics
 Summary(pl.UTF-8):	Opakowanie C++ dla operacji SIMD
 Name:		xsimd
-Version:	10.0.0
+Version:	11.1.0
 Release:	1
 License:	BSD
 Group:		Libraries
 #Source0Download: https://github.com/xtensor-stack/xsimd/tags
 Source0:	https://github.com/xtensor-stack/xsimd/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	e0dfed5da51b0d34d02b42f5b2ddf830
+# Source0-md5:	29ffd841d6491fddfbfaedeffc637f02
 URL:		https://xsimd.readthedocs.io/
 BuildRequires:	cmake >= 3.1
+BuildRequires:	libstdc++-devel >= 6:4.7
+%{?with_xtl:BuildRequires:	libstdc++-devel >= 6:5}
 BuildRequires:	rpmbuild(macros) >= 1.605
+%{?with_xtl:BuildRequires:	xtl-devel >= 0.7.0}
 %if %{with apidocs}
 BuildRequires:	doxygen
 BuildRequires:	python3-breathe
@@ -57,7 +60,9 @@ operujących na zbiorach wartości.
 Summary:	C++ wrappers for SIMD intrinsics
 Summary(pl.UTF-8):	Opakowanie C++ dla operacji SIMD
 Group:		Development/Libraries
-Requires:	libstdc++-devel
+Requires:	libstdc++-devel >= 6:4.7
+%{?with_xtl:Requires:	libstdc++-devel >= 6:5}
+%{?with_xtl:Requires:	xtl-devel >= 0.7.0}
 
 %description devel
 SIMD (Single Instruction, Multiple Data) is a feature of
