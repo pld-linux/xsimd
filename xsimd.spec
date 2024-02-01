@@ -1,20 +1,23 @@
 #
 # Conditional build:
 %bcond_without	apidocs		# API documentation
+%bcond_with	tests		# building tests and benchmarks
 %bcond_with	xtl		# XTL xcomplex support
 #
 Summary:	C++ wrappers for SIMD intrinsics
 Summary(pl.UTF-8):	Opakowanie C++ dla operacji SIMD
 Name:		xsimd
-Version:	11.1.0
+Version:	12.1.1
 Release:	1
 License:	BSD
 Group:		Libraries
 #Source0Download: https://github.com/xtensor-stack/xsimd/tags
 Source0:	https://github.com/xtensor-stack/xsimd/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	29ffd841d6491fddfbfaedeffc637f02
+# Source0-md5:	e8887de343bd6036bdfa1f4a4752dc64
+Patch0:		%{name}-batch.patch
 URL:		https://xsimd.readthedocs.io/
 BuildRequires:	cmake >= 3.1
+%{?with_tests:BuildRequires:	doctest >= 2.4.9}
 BuildRequires:	libstdc++-devel >= 6:4.7
 %{?with_xtl:BuildRequires:	libstdc++-devel >= 6:5}
 BuildRequires:	rpmbuild(macros) >= 1.605
@@ -27,6 +30,11 @@ BuildRequires:	sphinx-pdg-3
 %endif
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%if %{with tests}
+# SSE2 is the lowest supported path
+%define		specflags_ia32	-msse2
+%endif
 
 %description
 SIMD (Single Instruction, Multiple Data) is a feature of
@@ -105,13 +113,16 @@ Dokumentacja API biblioteki xsimd.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 install -d build
 cd build
 # fake LIBDIR so we can create noarch package
 %cmake .. \
-	-DCMAKE_INSTALL_LIBDIR=%{_datadir}
+	-DCMAKE_INSTALL_LIBDIR=%{_datadir} \
+	%{?with_tests:-DBUILD_BENCHMARK=ON} \
+	%{?with_tests:-DBUILD_TESTS=ON}
 
 %{__make}
 cd ..

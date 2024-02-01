@@ -1,0 +1,53 @@
+--- xsimd-12.1.1/benchmark/xsimd_benchmark.hpp.orig	2023-12-12 17:17:27.000000000 +0100
++++ xsimd-12.1.1/benchmark/xsimd_benchmark.hpp	2024-01-27 17:26:01.805384962 +0100
+@@ -337,11 +337,11 @@ namespace xsimd
+         duration_type t_double_scalar = benchmark_scalar(f, d_lhs, d_res, iter);
+ #endif
+ 
+-        duration_type t_float_vector = benchmark_simd<batch<float>>(f, f_lhs, f_res, iter);
+-        duration_type t_float_vector_u = benchmark_simd_unrolled<batch<float>>(f, f_lhs, f_res, iter);
++        duration_type t_float_vector = benchmark_simd<batch<float, default_arch>>(f, f_lhs, f_res, iter);
++        duration_type t_float_vector_u = benchmark_simd_unrolled<batch<float, default_arch>>(f, f_lhs, f_res, iter);
+ #if !XSIMD_WITH_NEON || XSIMD_WITH_NEON64
+-        duration_type t_double_vector = benchmark_simd<batch<double>>(f, d_lhs, d_res, iter);
+-        duration_type t_double_vector_u = benchmark_simd_unrolled<batch<double>>(f, d_lhs, d_res, iter);
++        duration_type t_double_vector = benchmark_simd<batch<double, default_arch>>(f, d_lhs, d_res, iter);
++        duration_type t_double_vector_u = benchmark_simd_unrolled<batch<double, default_arch>>(f, d_lhs, d_res, iter);
+ #endif
+ 
+         out << "============================" << std::endl;
+@@ -372,13 +372,13 @@ namespace xsimd
+         init_benchmark(d_lhs, d_rhs, d_res, size);
+ 
+         duration_type t_float_scalar = benchmark_scalar(f, f_lhs, f_rhs, f_res, iter);
+-        duration_type t_float_vector = benchmark_simd<batch<float>>(f, f_lhs, f_rhs, f_res, iter);
+-        duration_type t_float_vector_u = benchmark_simd_unrolled<batch<float>>(f, f_lhs, f_rhs, f_res, iter);
++        duration_type t_float_vector = benchmark_simd<batch<float, default_arch>>(f, f_lhs, f_rhs, f_res, iter);
++        duration_type t_float_vector_u = benchmark_simd_unrolled<batch<float, default_arch>>(f, f_lhs, f_rhs, f_res, iter);
+ 
+         duration_type t_double_scalar = benchmark_scalar(f, d_lhs, d_rhs, d_res, iter);
+ #if !XSIMD_WITH_NEON || XSIMD_WITH_NEON64
+-        duration_type t_double_vector = benchmark_simd<batch<double>>(f, d_lhs, d_rhs, d_res, iter);
+-        duration_type t_double_vector_u = benchmark_simd_unrolled<batch<double>>(f, d_lhs, d_rhs, d_res, iter);
++        duration_type t_double_vector = benchmark_simd<batch<double, default_arch>>(f, d_lhs, d_rhs, d_res, iter);
++        duration_type t_double_vector_u = benchmark_simd_unrolled<batch<double, default_arch>>(f, d_lhs, d_rhs, d_res, iter);
+ #endif
+ 
+         out << "============================" << std::endl;
+@@ -404,12 +404,12 @@ namespace xsimd
+         init_benchmark(d_op0, d_op1, d_op2, d_res, size);
+ 
+         duration_type t_float_scalar = benchmark_scalar(f, f_op0, f_op1, f_op2, f_res, iter);
+-        duration_type t_float_vector = benchmark_simd<batch<float>>(f, f_op0, f_op1, f_op2, f_res, iter);
+-        duration_type t_float_vector_u = benchmark_simd_unrolled<batch<float>>(f, f_op0, f_op1, f_op2, f_res, iter);
++        duration_type t_float_vector = benchmark_simd<batch<float, default_arch>>(f, f_op0, f_op1, f_op2, f_res, iter);
++        duration_type t_float_vector_u = benchmark_simd_unrolled<batch<float, default_arch>>(f, f_op0, f_op1, f_op2, f_res, iter);
+         duration_type t_double_scalar = benchmark_scalar(f, d_op0, d_op1, d_op2, d_res, iter);
+ #if !XSIMD_WITH_NEON || XSIMD_WITH_NEON64
+-        duration_type t_double_vector = benchmark_simd<batch<double>>(f, d_op0, d_op1, d_op2, d_res, iter);
+-        duration_type t_double_vector_u = benchmark_simd_unrolled<batch<double>>(f, d_op0, d_op1, d_op2, d_res, iter);
++        duration_type t_double_vector = benchmark_simd<batch<double, default_arch>>(f, d_op0, d_op1, d_op2, d_res, iter);
++        duration_type t_double_vector_u = benchmark_simd_unrolled<batch<double, default_arch>>(f, d_op0, d_op1, d_op2, d_res, iter);
+ #endif
+ 
+         out << "============================" << std::endl;
