@@ -7,16 +7,18 @@
 Summary:	C++ wrappers for SIMD intrinsics
 Summary(pl.UTF-8):	Opakowanie C++ dla operacji SIMD
 Name:		xsimd
-Version:	12.1.1
+Version:	13.2.0
 Release:	1
 License:	BSD
 Group:		Libraries
 #Source0Download: https://github.com/xtensor-stack/xsimd/tags
 Source0:	https://github.com/xtensor-stack/xsimd/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	e8887de343bd6036bdfa1f4a4752dc64
+# Source0-md5:	f451a1c57d2a4fdc0ba663be438dced4
 Patch0:		%{name}-batch.patch
+# https://github.com/xtensor-stack/xsimd/pull/1091.patch
+Patch1:		%{name}-1091.patch
 URL:		https://xsimd.readthedocs.io/
-BuildRequires:	cmake >= 3.1
+BuildRequires:	cmake >= 3.8
 %{?with_tests:BuildRequires:	doctest >= 2.4.9}
 BuildRequires:	libstdc++-devel >= 6:4.7
 %{?with_xtl:BuildRequires:	libstdc++-devel >= 6:5}
@@ -114,13 +116,12 @@ Dokumentacja API biblioteki xsimd.
 %prep
 %setup -q
 %patch -P0 -p1
+%patch -P1 -p1
 
 %build
 install -d build
 cd build
-# fake LIBDIR so we can create noarch package
 %cmake .. \
-	-DCMAKE_INSTALL_LIBDIR=%{_datadir} \
 	%{?with_tests:-DBUILD_BENCHMARK=ON} \
 	%{?with_tests:-DBUILD_TESTS=ON}
 
